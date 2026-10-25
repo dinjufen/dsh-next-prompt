@@ -1,8 +1,8 @@
 # dsh-next-prompt
 
-给 DeepSeek Harness 加上类似 Claude Code 的「下一步提示词建议」。每轮回复结束后，插件会预测你接下来可能输入的内容，显示在输入框上方，按 **Tab** 就能填进输入框。
+**中文** | [English](README.en.md)
 
-> A DeepSeek Harness plugin that predicts your next prompt after each turn and shows it above the composer. Press **Tab** to accept it, or **×** to dismiss it. It can be turned off in Settings → General.
+给 DeepSeek Harness 加上类似 Claude Code 的「下一步提示词建议」。每轮回复结束后，插件会预测你接下来可能输入的内容，显示在输入框上方，按 **Tab** 就能填进输入框。
 
 ## 功能
 
