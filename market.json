@@ -1,0 +1,77 @@
+{
+  "format": 1,
+  "title": {
+    "en": "dinjufen's DSH plugins",
+    "zh": "dinjufen 的 DSH 插件"
+  },
+  "description": {
+    "en": "Plugins for DeepSeek Harness by Jeff Ding.",
+    "zh": "Jeff Ding 编写的 DeepSeek Harness 插件。"
+  },
+  "metadata": {
+    "categories": {
+      "productivity": {
+        "title": {
+          "en": "Productivity",
+          "zh": "效率"
+        }
+      }
+    },
+    "labels": {
+      "composer": {
+        "title": {
+          "en": "Composer",
+          "zh": "输入框"
+        }
+      }
+    }
+  },
+  "plugins": [
+    {
+      "name": "dsh-next-prompt",
+      "title": {
+        "en": "Next Prompt",
+        "zh": "Next Prompt 提示词建议"
+      },
+      "description": {
+        "en": "After each turn, predicts what you are likely to type next and shows it above the composer. Press Tab to accept, × to dismiss; switch it off in Settings → General.",
+        "zh": "每轮回复结束后预测你接下来可能输入的内容，显示在输入框上方。按 Tab 接受，点 × 关闭本轮建议；可在 设置 → 通用 里关闭。"
+      },
+      "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3QgeD0iNiIgeT0iMTQiIHdpZHRoPSI1MiIgaGVpZ2h0PSIzNiIgcng9IjEwIiBmaWxsPSIjNGQ2YmZlIi8+CiAgPHJlY3QgeD0iMTQiIHk9IjI3IiB3aWR0aD0iMTYiIGhlaWdodD0iMTAiIHJ4PSIzIiBmaWxsPSIjZmZmZmZmIi8+CiAgPHJlY3QgeD0iMzQiIHk9IjI5IiB3aWR0aD0iMTYiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIuNTUiLz4KICA8cmVjdCB4PSIzNCIgeT0iMzQiIHdpZHRoPSIxMCIgaGVpZ2h0PSIzIiByeD0iMS41IiBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9Ii41NSIvPgo8L3N2Zz4K",
+      "author": "Jeff Ding",
+      "homepage": "https://github.com/dinjufen/dsh-next-prompt#readme",
+      "repository": {
+        "url": "https://github.com/dinjufen/dsh-next-prompt"
+      },
+      "metadata": {
+        "category": "productivity",
+        "labels": [
+          "composer"
+        ],
+        "keywords": [
+          "prompt",
+          "suggestion",
+          "autocomplete",
+          "tab",
+          "提示词",
+          "建议",
+          "补全"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.2.0",
+          "publishTimestamp": 1792935496,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/dinjufen/dsh-next-prompt",
+            "commit": "4ac6d7fdba4370c6e04de1e215a9e1e50735fd26"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.3 <0.3.0"
+          }
+        }
+      ]
+    }
+  ]
+}
