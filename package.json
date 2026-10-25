@@ -1,0 +1,59 @@
+{
+  "name": "dsh-next-prompt",
+  "version": "0.2.0",
+  "description": "DeepSeek Harness plugin: predicts your next prompt after each turn; press Tab in the composer to accept it.",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "dsh-plugin",
+    "prompt-suggestion",
+    "autocomplete"
+  ],
+  "author": "Jeff Ding (https://github.com/dinjufen)",
+  "license": "MIT",
+  "homepage": "https://github.com/dinjufen/dsh-next-prompt#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dinjufen/dsh-next-prompt.git"
+  },
+  "type": "module",
+  "engines": {
+    "dsh": ">=0.2.1-rc.3 <0.3.0"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "shipped.js",
+    "suggestion.js",
+    "remote.js",
+    "typert.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-api-remotes",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-shortcuts",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-settings-general",
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  }
+}

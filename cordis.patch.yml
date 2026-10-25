@@ -1,0 +1,7 @@
+- insert:
+    - id: next-prompt
+      name: 'dsh-next-prompt'
+      config:
+        maxOutputTokens: 64
+        timeoutMs: 20000
+        includeTools: true

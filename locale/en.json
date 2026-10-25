@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Next Prompt",
+    "description": "After each turn, predicts what you are likely to type next and shows it above the composer. Press Tab to accept. Reuses the conversation prefix so DeepSeek's context cache covers most input tokens."
+  }
+}
