@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Next Prompt 提示词建议",
+    "title": "DSH Suggest 提示词建议",
     "description": "每轮回复结束后，预测你接下来可能输入的内容并显示在输入框上方，按 Tab 接受。复用主对话的请求前缀，大部分输入 token 可命中 DeepSeek 上下文缓存。"
   }
 }

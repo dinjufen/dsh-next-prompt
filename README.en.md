@@ -1,4 +1,4 @@
-# dsh-next-prompt
+# dsh-suggest
 
 [中文](README.md) | **English**
 
@@ -14,34 +14,42 @@ Next-prompt suggestions for DeepSeek Harness, similar to Claude Code's. After ea
 
 ## Install
 
-Requires DeepSeek Harness **0.2.1-rc.3** or a later 0.2.x release.
+Requires DeepSeek Harness **0.2.1-rc.3** or a later 0.2.x release. Published on npm as [`dsh-suggest`](https://www.npmjs.com/package/dsh-suggest).
 
-### Option 1: plugin market
+### Option 1: add it in DeepSeek Harness (recommended)
+
+Open **Plugins**, click **Add plugin**, enter the package name `dsh-suggest` and install. It is available from both the official npm registry and the npmmirror mirror.
+
+### Option 2: command line
+
+```bash
+"/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" plugin --profile desktop add dsh-suggest
+```
+
+To uninstall:
+
+```bash
+"/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" plugin --profile desktop remove dsh-suggest
+```
+
+### Option 3: plugin market
 
 1. Open **Plugins** and enable **Custom plugin markets** under Experimental plugins.
 2. On the **Discover** tab, add this index source:
 
    ```
-   https://raw.githubusercontent.com/dinjufen/dsh-next-prompt/main/market.json
+   https://raw.githubusercontent.com/dinjufen/dsh-suggest/main/market.json
    ```
 
-3. Find **Next Prompt** in the list and click **Install**.
+3. Find **DSH Suggest** in the list and click **Install**.
 
-### Option 2: command line
+Installing from inside the app takes effect right away (reload the page if needed); after a command-line install, restart the app.
 
-```bash
-"/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" plugin --profile desktop add "git+https://github.com/dinjufen/dsh-next-prompt.git"
-```
-
-Restart DeepSeek Harness after installing. To uninstall:
-
-```bash
-"/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" plugin --profile desktop remove dsh-next-prompt
-```
+> Upgrading from 0.2.0: 0.2.0 was named `dsh-next-prompt` (published on GitHub only); from 0.3.0 the package is `dsh-suggest`. Run `remove dsh-next-prompt` first, then install as above. Note that `dsh-next-prompt` on npm is a similar plugin by another author, not this project.
 
 ## How it works
 
-- **Host (`index.js`)**: exposes one remote method, `nextPrompt.suggest({ sessionId })`. It reuses the session's latest model request unchanged (request header, message history, tool definitions and `toolHistory`), appends one prediction instruction (`suggestion.js`) at the end, and sends one more request to the same model. That request is capped at 64 output tokens and uses the lowest reasoning effort. Because its prefix is identical to the main conversation's, most input tokens hit DeepSeek's context cache (about 93% in testing). Nothing is written to the session log, so the model never sees this request in later turns.
+- **Host (`index.js`)**: exposes one remote method, `dshSuggest.suggest({ sessionId })`. It reuses the session's latest model request unchanged (request header, message history, tool definitions and `toolHistory`), appends one prediction instruction (`suggestion.js`) at the end, and sends one more request to the same model. That request is capped at 64 output tokens and uses the lowest reasoning effort. Because its prefix is identical to the main conversation's, most input tokens hit DeepSeek's context cache (about 93% in testing). Nothing is written to the session log, so the model never sees this request in later turns.
 - **Filtering (`suggestion.js`)**: strips "Suggestion:" prefixes, quotes and tags, then drops empty replies, evaluations ("thanks", "looks good"), assistant-voice text ("Let me…", "I'll…"), questions, multiple sentences, and over-long or formatted text.
 - **Client (`client.js`)**: the suggestion renders in the `conversation.input.overlay` slot and is requested once each time a turn ends. Tab is captured with `ctx.shortcuts.observeFixedInput`, and only in that composer while a suggestion is showing. The Settings row lives in the `settings.general.item` slot.
 - **Settings switch**: `enabled` is a volatile field in the plugin config. The settings service writes it to the profile's `cordis.patch.yml`, and the running plugin picks up the new value immediately.
@@ -52,8 +60,8 @@ Restart DeepSeek Harness after installing. To uninstall:
 Override the config in the profile's `cordis.patch.yml`:
 
 ```yaml
-- id: next-prompt
-  name: dsh-next-prompt
+- id: dsh-suggest
+  name: dsh-suggest
   config:
     enabled: true           # master switch, also in Settings → General
     maxOutputTokens: 64     # output cap for one suggestion
@@ -70,12 +78,13 @@ Note: an override replaces the whole `config`; fields you leave out fall back to
 - Built against internal interfaces of DeepSeek Harness 0.2.1-rc.3, with a hand-written Typert manifest. Later Harness releases may need changes.
 - A suggestion is requested only when the client sees a turn end. Reloading the page or opening an older session does not trigger one, to avoid extra cost.
 - The same session cannot be open in the desktop app and the web UI at once; this is a DeepSeek Harness limitation.
+- Do not install it together with other prompt-suggestion plugins that also intercept Tab in the composer (such as `dsh-next-prompt` on npm); they compete for the same key.
 
 ## Development
 
 ```bash
-git clone https://github.com/dinjufen/dsh-next-prompt.git
-"/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" plugin --profile desktop add "link:$PWD/dsh-next-prompt"
+git clone https://github.com/dinjufen/dsh-suggest.git
+"/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" plugin --profile desktop add "link:$PWD/dsh-suggest"
 ```
 
 A `link:` install uses your local directory directly: after changing `client.js`, reload the page; after changing `index.js`, restart the app.

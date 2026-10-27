@@ -1,10 +1,10 @@
 window.__ModuleLoader__.load({
-  id: 'dsh-next-prompt',
+  id: 'dsh-suggest',
   factory(require) {
     const React = require('react')
     const { z } = require('zod')
     const h = React.createElement
-    const PACKAGE = 'dsh-next-prompt'
+    const PACKAGE = 'dsh-suggest'
     const SLOT = 'conversation.input.overlay'
 
     //#region Typert remote info (copied from @deepseek-ai/dsh-typert-protocol/remote-info, MIT)
@@ -114,8 +114,8 @@ window.__ModuleLoader__.load({
     const TYPERT_REMOTE = createTypertRemoteInfo({
       package: PACKAGE,
       methods: {
-        'nextPrompt/suggest': {
-          service: 'nextPrompt',
+        'dshSuggest/suggest': {
+          service: 'dshSuggest',
           description: 'Predict the next user prompt for a Session whose last turn has finished.',
           invocation: { kind: 'direct' },
           parameters: [{
@@ -138,7 +138,7 @@ window.__ModuleLoader__.load({
           cancellation: { parameter: 'signal' },
           result: {
             mode: 'strict',
-            typeSymbol: `${PACKAGE}#nextPrompt/suggest:result`,
+            typeSymbol: `${PACKAGE}#dshSuggest/suggest:result`,
             create: () => (resultSchema ??= z.object({ text: z.string().nullable(), reason: z.string() })),
             description: 'Suggestion text, or null with the suppression reason.',
             jsonSchema: RESULT_JSON,
@@ -152,8 +152,8 @@ window.__ModuleLoader__.load({
     const bySession = new Map()
 
     /** Loader entry id of the Host plugin; also its settings namespace. */
-    const ENTRY = 'next-prompt'
-    const NS = 'next-prompt'
+    const ENTRY = 'dsh-suggest'
+    const NS = 'dsh-suggest'
     const zh = {
       'hint.accept': '接受建议',
       'hint.dismiss': '关闭本次建议',
@@ -238,9 +238,9 @@ window.__ModuleLoader__.load({
     }
 
     function registerUi(ctx) {
-      ctx.effect(() => ctx.locale.register(NS, { zh, en }), 'next-prompt: dictionaries')
+      ctx.effect(() => ctx.locale.register(NS, { zh, en }), 'dsh-suggest: dictionaries')
       const enabled = createEnabledPreference(ctx)
-      ctx.effect(() => () => enabled.dispose(), 'next-prompt: preference subscription')
+      ctx.effect(() => () => enabled.dispose(), 'dsh-suggest: preference subscription')
 
       function SuggestionHint(props) {
         const { sessionId, useSession, useInput, inputActions, t } = props
@@ -264,20 +264,20 @@ window.__ModuleLoader__.load({
           sawRunning.current = false
           if (!enabled.getSnapshot()) return
           const controller = new AbortController()
-          ctx.remote.nextPrompt.suggest({ sessionId }, controller.signal).then(result => {
+          ctx.remote.dshSuggest.suggest({ sessionId }, controller.signal).then(result => {
             if (controller.signal.aborted) return
             if (!result.ok) {
-              console.warn('[next-prompt] request failed', result.error)
+              console.warn('[dsh-suggest] request failed', result.error)
               return
             }
             if (result.value.text === null) {
-              console.debug('[next-prompt] suppressed:', result.value.reason)
+              console.debug('[dsh-suggest] suppressed:', result.value.reason)
               return
             }
             bySession.set(sessionId, result.value.text)
             setText(result.value.text)
           }, error => {
-            if (!controller.signal.aborted) console.warn('[next-prompt] request failed', error)
+            if (!controller.signal.aborted) console.warn('[dsh-suggest] request failed', error)
           })
           return () => controller.abort()
         }, [running, sessionId])
@@ -315,7 +315,7 @@ window.__ModuleLoader__.load({
         if (!visible) return null
         // Both buttons keep editor focus on press; they are pointer shortcuts for Tab and dismissal.
         const keepFocus = event => event.preventDefault()
-        return h('div', { ref: root, className: 'lps-hint', 'data-next-prompt': true },
+        return h('div', { ref: root, className: 'lps-hint', 'data-dsh-suggest': true },
           h('style', null, STYLE),
           h('div', { className: 'lps-chip' },
             h('button', {
@@ -347,7 +347,7 @@ window.__ModuleLoader__.load({
         const toggle = () => {
           setPending(true)
           setEnabled(!on).catch(error => {
-            console.warn('[next-prompt] saving the setting failed', error)
+            console.warn('[dsh-suggest] saving the setting failed', error)
           }).finally(() => setPending(false))
         }
         return h('div', { className: 'lps-row' },
@@ -366,10 +366,10 @@ window.__ModuleLoader__.load({
           }, h('span', { className: 'lps-thumb' })))
       }
 
-      ctx.slots.inject(SLOT, () => ctx.slots.register({ name: SLOT, id: 'next-prompt', order: 50, locale: NS }, SuggestionHint))
+      ctx.slots.inject(SLOT, () => ctx.slots.register({ name: SLOT, id: 'dsh-suggest', order: 50, locale: NS }, SuggestionHint))
       ctx.slots.inject('settings.general.item', () => ctx.slots.register({
         name: 'settings.general.item',
-        id: 'next-prompt',
+        id: 'dsh-suggest',
         order: 25,
         locale: NS,
         inject: () => ({
@@ -385,7 +385,7 @@ window.__ModuleLoader__.load({
       inject: SERVICES,
       async apply(ctx) {
         const unmountRemote = await ctx.remote.$mount(TYPERT_REMOTE)
-        const ui = ctx.inject(['remote.nextPrompt', ...SERVICES.filter(name => name !== 'remote')], child => registerUi(child))
+        const ui = ctx.inject(['remote.dshSuggest', ...SERVICES.filter(name => name !== 'remote')], child => registerUi(child))
         try {
           await ui
         } catch (error) {

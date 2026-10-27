@@ -1,5 +1,5 @@
 /**
- * Host-face Typert manifest for `nextPrompt/suggest`, the hand-written
+ * Host-face Typert manifest for `dshSuggest/suggest`, the hand-written
  * equivalent of a generated artifact. Built at activation because the Harness
  * runtime packages (Typert protocol, Zod) are only reachable through the Loader.
  */
@@ -26,7 +26,7 @@ export function createManifest(createTypertRemoteInfo, z) {
         summary: 'Predicts the next user prompt from the finished conversation.',
         tags: [],
         jsDoc: '/** Predicts the next user prompt from the finished conversation. */',
-        key: 'nextPrompt',
+        key: 'dshSuggest',
         exportName: 'default',
         members: [{
           kind: 'method',

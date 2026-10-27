@@ -1,8 +1,8 @@
 /**
- * Typert Remote definition for `nextPrompt/suggest`, shared by the Host
+ * Typert Remote definition for `dshSuggest/suggest`, shared by the Host
  * manifest. The browser module carries its own copy of the same spec.
  */
-export const PACKAGE = 'dsh-next-prompt'
+export const PACKAGE = 'dsh-suggest'
 
 const REQUEST_JSON = {
   type: 'object',
@@ -28,8 +28,8 @@ export function remoteSpec(z) {
   return {
     package: PACKAGE,
     methods: {
-      'nextPrompt/suggest': {
-        service: 'nextPrompt',
+      'dshSuggest/suggest': {
+        service: 'dshSuggest',
         description: 'Predict the next user prompt for a Session whose last turn has finished.',
         invocation: { kind: 'direct' },
         parameters: [{
@@ -52,7 +52,7 @@ export function remoteSpec(z) {
         cancellation: { parameter: 'signal' },
         result: {
           mode: 'strict',
-          typeSymbol: `${PACKAGE}#nextPrompt/suggest:result`,
+          typeSymbol: `${PACKAGE}#dshSuggest/suggest:result`,
           create: () => (result ??= z.object({ text: z.string().nullable(), reason: z.string() })),
           description: 'Suggestion text, or null with the suppression reason.',
           jsonSchema: RESULT_JSON,

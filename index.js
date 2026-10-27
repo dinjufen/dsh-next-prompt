@@ -1,7 +1,7 @@
 /**
- * Host half of the next-prompt bundle.
+ * Host half of the dsh-suggest bundle.
  *
- * After a turn ends, the Client calls `nextPrompt.suggest({ sessionId })`.
+ * After a turn ends, the Client calls `dshSuggest.suggest({ sessionId })`.
  * The Host forks the exact model request the agent last sent (same request
  * header, same derived messages, same tools), appends one suggestion
  * instruction as a final user message, and asks the same route for a short
@@ -25,7 +25,7 @@ const [protocol, { createUserMessage }, zod, { default: Schema }] = await Promis
 ])
 const z = zod.z ?? zod.default ?? zod
 
-export const name = 'next-prompt'
+export const name = 'dsh-suggest'
 export const inject = ['llm', 'sessions', 'typert']
 
 export const Config = Schema.object({
@@ -84,7 +84,7 @@ async function generate(ctx, config, session, signal) {
 
   const instruction = createUserMessage({
     content: [{ type: 'text', text: SUGGESTION_INSTRUCTION }],
-    source: { kind: 'dsh-next-prompt' },
+    source: { kind: 'dsh-suggest' },
   })
   const options = {
     ...call.config,
@@ -92,7 +92,7 @@ async function generate(ctx, config, session, signal) {
     toolHistory: session.toolHistory(),
     ...(includeTools && override === undefined && header.tools !== undefined ? { tools: header.tools } : {}),
     sessionId: session.id,
-    purpose: 'next-prompt',
+    purpose: 'dsh-suggest',
     signal: deadline,
   }
 
@@ -106,7 +106,7 @@ async function generate(ctx, config, session, signal) {
     else if (chunk.type === 'usage') usage = chunk.usage
     else if (chunk.type === 'finish') finish = chunk.reason
   }
-  if (config.debug) console.error('[next-prompt] usage', JSON.stringify(usage), 'text', JSON.stringify(text))
+  if (config.debug) console.error('[dsh-suggest] usage', JSON.stringify(usage), 'text', JSON.stringify(text))
   if (finish?.kind === 'error' || finish?.kind === 'aborted') return none(`finish-${finish.kind}`)
   if (finish?.kind === 'max-tokens') return none('max-tokens')
 
@@ -129,14 +129,14 @@ export function apply(ctx, config) {
 
   class PromptSuggestionController extends TypertRemoteService {
     constructor(serviceCtx) {
-      super(serviceCtx, 'nextPrompt')
+      super(serviceCtx, 'dshSuggest')
       /** One in-flight or settled generation per Session, keyed by the log length it was built from. */
       this.latest = new Map()
       for (const initializer of remoteInitializers) initializer.call(this)
       serviceCtx.effect(() => () => {
         for (const entry of this.latest.values()) entry.controller.abort()
         this.latest.clear()
-      }, 'next-prompt: cancel pending generations')
+      }, 'dsh-suggest: cancel pending generations')
     }
 
     /**

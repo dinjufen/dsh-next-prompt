@@ -1,5 +1,5 @@
 /**
- * Pure next-prompt policy: the instruction appended to the forked
+ * Pure prompt-suggestion policy: the instruction appended to the forked
  * conversation, and the filter that drops low-quality predictions.
  * No Harness imports, so it can be unit-tested with plain Node.
  */

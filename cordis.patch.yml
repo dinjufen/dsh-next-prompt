@@ -1,6 +1,6 @@
 - insert:
-    - id: next-prompt
-      name: 'dsh-next-prompt'
+    - id: dsh-suggest
+      name: 'dsh-suggest'
       config:
         maxOutputTokens: 64
         timeoutMs: 20000

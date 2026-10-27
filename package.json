@@ -1,20 +1,27 @@
 {
-  "name": "dsh-next-prompt",
-  "version": "0.2.0",
+  "name": "dsh-suggest",
+  "version": "0.3.0",
   "description": "DeepSeek Harness plugin: predicts your next prompt after each turn; press Tab in the composer to accept it.",
   "keywords": [
     "dsh",
-    "deepseek-harness",
     "dsh-plugin",
+    "deepseek",
+    "deepseek-harness",
+    "prompt",
     "prompt-suggestion",
+    "suggest",
+    "autosuggest",
+    "next-prompt",
+    "composer",
+    "tab",
     "autocomplete"
   ],
   "author": "Jeff Ding (https://github.com/dinjufen)",
   "license": "MIT",
-  "homepage": "https://github.com/dinjufen/dsh-next-prompt#readme",
+  "homepage": "https://github.com/dinjufen/dsh-suggest#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dinjufen/dsh-next-prompt.git"
+    "url": "git+https://github.com/dinjufen/dsh-suggest.git"
   },
   "type": "module",
   "engines": {
@@ -56,5 +63,8 @@
         "@deepseek-ai/dsh-client-ui-conversation"
       ]
     }
+  },
+  "bugs": {
+    "url": "https://github.com/dinjufen/dsh-suggest/issues"
   }
 }
