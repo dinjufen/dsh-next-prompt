@@ -28,10 +28,10 @@
   },
   "plugins": [
     {
-      "name": "dsh-next-prompt",
+      "name": "dsh-suggest",
       "title": {
-        "en": "Next Prompt",
-        "zh": "Next Prompt 提示词建议"
+        "en": "DSH Suggest",
+        "zh": "DSH Suggest 提示词建议"
       },
       "description": {
         "en": "After each turn, predicts what you are likely to type next and shows it above the composer. Press Tab to accept, × to dismiss; switch it off in Settings → General.",
@@ -39,9 +39,9 @@
       },
       "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3QgeD0iNiIgeT0iMTQiIHdpZHRoPSI1MiIgaGVpZ2h0PSIzNiIgcng9IjEwIiBmaWxsPSIjNGQ2YmZlIi8+CiAgPHJlY3QgeD0iMTQiIHk9IjI3IiB3aWR0aD0iMTYiIGhlaWdodD0iMTAiIHJ4PSIzIiBmaWxsPSIjZmZmZmZmIi8+CiAgPHJlY3QgeD0iMzQiIHk9IjI5IiB3aWR0aD0iMTYiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIuNTUiLz4KICA8cmVjdCB4PSIzNCIgeT0iMzQiIHdpZHRoPSIxMCIgaGVpZ2h0PSIzIiByeD0iMS41IiBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9Ii41NSIvPgo8L3N2Zz4K",
       "author": "Jeff Ding",
-      "homepage": "https://github.com/dinjufen/dsh-next-prompt#readme",
+      "homepage": "https://github.com/dinjufen/dsh-suggest#readme",
       "repository": {
-        "url": "https://github.com/dinjufen/dsh-next-prompt"
+        "url": "https://github.com/dinjufen/dsh-suggest"
       },
       "metadata": {
         "category": "productivity",
@@ -51,6 +51,8 @@
         "keywords": [
           "prompt",
           "suggestion",
+          "autosuggest",
+          "next-prompt",
           "autocomplete",
           "tab",
           "提示词",
@@ -60,12 +62,10 @@
       },
       "versions": [
         {
-          "version": "0.2.0",
-          "publishTimestamp": 1792935496,
+          "version": "0.3.0",
+          "publishTimestamp": 1793112035,
           "source": {
-            "type": "git",
-            "url": "https://github.com/dinjufen/dsh-next-prompt",
-            "commit": "4ac6d7fdba4370c6e04de1e215a9e1e50735fd26"
+            "type": "npm"
           },
           "engines": {
             "dsh": ">=0.2.1-rc.3 <0.3.0"
