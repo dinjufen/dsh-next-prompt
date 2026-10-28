@@ -2,14 +2,18 @@
 
 **中文** | [English](README.en.md)
 
+[![npm](https://img.shields.io/npm/v/dsh-suggest)](https://www.npmjs.com/package/dsh-suggest)
+
 给 DeepSeek Harness 加上类似 Claude Code 的「下一步提示词建议」。每轮回复结束后，插件会预测你接下来可能输入的内容，显示在输入框上方，按 **Tab** 就能填进输入框。
+
+<img src="docs/images/zh/05-suggestion.png" alt="回复结束后，输入框上方出现建议「加上单元测试吧」" width="760">
 
 ## 功能
 
-- 每轮回复结束后，在输入框上方显示一条预测的下一句，例如「跑一下测试」「要，做成表格」。
+- 每轮回复结束后，在输入框上方显示一条预测的下一句，例如「跑一下测试」「加上单元测试吧」。
 - 在输入框里按 **Tab**，或点一下提示条，会把建议填进草稿。这次插入可以撤销。
 - 点提示条右侧的 **×** 会关闭本轮建议。之后 Tab 恢复原生行为，直到下一轮回复结束。
-- 在 **设置 → 通用 → Prompt suggestions** 里可以关闭整个功能（默认开启），切换后立即生效，不用重启。
+- 在 **设置 → 通用设置 → 提示词建议** 里可以关闭整个功能（默认开启），切换后立即生效，不用重启。
 - 中英文都适用，建议会跟随你的语言和说话风格。
 
 ## 安装
@@ -18,7 +22,23 @@
 
 ### 方式一：在 DeepSeek Harness 里添加（推荐）
 
-打开 **插件** 页，点 **添加插件**，输入包名 `dsh-suggest` 后安装。npm 官方源和 npmmirror 镜像都能找到。
+**1. 打开左侧的「插件」页，点右上角的「添加插件」。**
+
+<img src="docs/images/zh/01-add-plugin.png" alt="插件页右上角的「添加插件」按钮" width="760">
+
+**2. 输入包名 `dsh-suggest`，点「安装」。** 安装源保持「npm 官方源」即可；访问 npm 慢时，可以在右侧切换到 npmmirror 镜像。
+
+<img src="docs/images/zh/02-enter-name.png" alt="在添加插件对话框中输入 dsh-suggest" width="480">
+
+**3. 安装完成后，点「立即启用」。**
+
+<img src="docs/images/zh/03-installed.png" alt="安装成功，显示 dsh-suggest 版本 0.3.0" width="480">
+
+**4. 「已安装插件」里出现 DSH Suggest，开关处于打开状态，就可以用了。**
+
+<img src="docs/images/zh/04-enabled.png" alt="已安装插件列表中的 DSH Suggest 提示词建议" width="760">
+
+在客户端里安装会立即生效；如果建议没有出现，刷新一下页面或重启客户端。
 
 ### 方式二：命令行
 
@@ -26,7 +46,7 @@
 "/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" plugin --profile desktop add dsh-suggest
 ```
 
-卸载：
+用命令行安装后需要重启客户端。卸载：
 
 ```bash
 "/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" plugin --profile desktop remove dsh-suggest
@@ -43,9 +63,21 @@
 
 3. 在列表里找到 **DSH Suggest**，点安装。
 
-在客户端里安装会立即生效（必要时刷新一下页面）；用命令行安装时，需要重启客户端。
-
 > 从 0.2.0 升级：0.2.0 的包名是 `dsh-next-prompt`（只在 GitHub 上发布过），0.3.0 起改名为 `dsh-suggest`。请先 `remove dsh-next-prompt`，再按上面的方法安装。注意 npm 上的 `dsh-next-prompt` 是另一位作者的同类插件，不是这个项目。
+
+## 使用
+
+**1. 正常对话。每轮回复结束后，输入框上方会出现一条建议**，就像本页开头的截图那样。
+
+**2. 在输入框里按 Tab（或点一下建议），它就会填进输入框，可以直接发送，也可以先改一改。** 不想要这条建议时，点右侧的 ×。
+
+<img src="docs/images/zh/06-tab-accepted.png" alt="按 Tab 后，建议填进了输入框" width="760">
+
+**3. 想关闭这个功能：左下角头像 → 设置 → 通用设置 → 提示词建议。**
+
+<img src="docs/images/zh/07-settings.png" alt="设置 → 通用设置里的「提示词建议」开关" width="560">
+
+下一步不明显时，模型可能不给建议，这时提示条不会出现。
 
 ## 工作原理
 
@@ -63,7 +95,7 @@
 - id: dsh-suggest
   name: dsh-suggest
   config:
-    enabled: true           # 总开关，也可以在 设置 → 通用 里切换
+    enabled: true           # 总开关，也可以在 设置 → 通用设置 → 提示词建议 里切换
     maxOutputTokens: 64     # 单次建议的输出上限
     timeoutMs: 20000        # 单次建议的超时（毫秒）
     includeTools: true      # 带上主请求的工具定义，保证前缀一致、缓存命中

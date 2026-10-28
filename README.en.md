@@ -2,11 +2,15 @@
 
 [中文](README.md) | **English**
 
+[![npm](https://img.shields.io/npm/v/dsh-suggest)](https://www.npmjs.com/package/dsh-suggest)
+
 Next-prompt suggestions for DeepSeek Harness, similar to Claude Code's. After each turn, the plugin predicts what you are likely to type next and shows it above the composer. Press **Tab** to put it in the composer.
+
+<img src="docs/images/en/05-suggestion.png" alt="After a reply, the suggestion 'Yes, add unit tests covering punctuation too' appears above the composer" width="760">
 
 ## Features
 
-- After each turn, a predicted next prompt appears above the composer, such as "run the tests" or "yes, make it a table".
+- After each turn, a predicted next prompt appears above the composer, such as "run the tests" or "Yes, add unit tests".
 - Press **Tab** in the composer, or click the suggestion, to insert it into your draft. The insertion can be undone.
 - Click the **×** on the right of the suggestion to dismiss it for this turn. Tab then behaves normally until the next turn ends.
 - Turn the whole feature off in **Settings → General → Prompt suggestions** (on by default). The change applies immediately, with no restart.
@@ -18,7 +22,23 @@ Requires DeepSeek Harness **0.2.1-rc.3** or a later 0.2.x release. Published on 
 
 ### Option 1: add it in DeepSeek Harness (recommended)
 
-Open **Plugins**, click **Add plugin**, enter the package name `dsh-suggest` and install. It is available from both the official npm registry and the npmmirror mirror.
+**1. Open Plugins in the sidebar and click Add plugin in the top right.**
+
+<img src="docs/images/en/01-add-plugin.png" alt="The Add plugin button on the Plugins page" width="760">
+
+**2. Enter the package name `dsh-suggest` and click Install.** Keep the registry on "Official npm registry"; if npm is slow for you, switch to the npmmirror mirror in the registry menu.
+
+<img src="docs/images/en/02-enter-name.png" alt="dsh-suggest entered in the Add plugin dialog" width="480">
+
+**3. When it says Installed, click Enable now.**
+
+<img src="docs/images/en/03-installed.png" alt="Installed: dsh-suggest version 0.3.0" width="480">
+
+**4. DSH Suggest now appears under Installed plugins with its switch on. You're ready.**
+
+<img src="docs/images/en/04-enabled.png" alt="DSH Suggest in the Installed plugins list" width="760">
+
+Installing from inside the app takes effect right away; if no suggestion shows up, reload the page or restart the app.
 
 ### Option 2: command line
 
@@ -26,7 +46,7 @@ Open **Plugins**, click **Add plugin**, enter the package name `dsh-suggest` and
 "/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" plugin --profile desktop add dsh-suggest
 ```
 
-To uninstall:
+Restart the app after a command-line install. To uninstall:
 
 ```bash
 "/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" plugin --profile desktop remove dsh-suggest
@@ -43,9 +63,21 @@ To uninstall:
 
 3. Find **DSH Suggest** in the list and click **Install**.
 
-Installing from inside the app takes effect right away (reload the page if needed); after a command-line install, restart the app.
-
 > Upgrading from 0.2.0: 0.2.0 was named `dsh-next-prompt` (published on GitHub only); from 0.3.0 the package is `dsh-suggest`. Run `remove dsh-next-prompt` first, then install as above. Note that `dsh-next-prompt` on npm is a similar plugin by another author, not this project.
+
+## Usage
+
+**1. Chat as usual. When a turn ends, a suggestion appears above the composer**, as in the screenshot at the top of this page.
+
+**2. Press Tab in the composer (or click the suggestion) to put it in your draft, then send it as is or edit it first.** Click × to dismiss a suggestion you don't want.
+
+<img src="docs/images/en/06-tab-accepted.png" alt="After pressing Tab, the suggestion is in the composer" width="760">
+
+**3. To turn the feature off: avatar in the bottom left → Settings → General → Prompt suggestions.**
+
+<img src="docs/images/en/07-settings.png" alt="The Prompt suggestions switch in Settings → General" width="560">
+
+When the next step isn't obvious, the model may not suggest anything, and no suggestion is shown.
 
 ## How it works
 
